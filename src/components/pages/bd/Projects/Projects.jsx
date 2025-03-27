@@ -10,9 +10,7 @@ export const Projects = () => {
   const [projectName, setProjectName] = useState("");
   const [requirements, setRequirements] = useState("");
   const [budget, setBudget] = useState("");
-  const [deadline, setDeadline] = useState("");
   const [showMessage, setShowMessage] = useState(false);
-  const [totalHours, setTotalHours] = useState("");
   const [showModal, setShowModal] = useState(false); 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,30 +18,26 @@ export const Projects = () => {
       clientId.trim() &&
       projectName.trim() &&
       requirements.trim() &&
-      budget.trim() &&
-      deadline.trim() &&
-      totalHours.trim()
+      budget.trim()
     ) {
-      await addProject(clientId, projectName, requirements, budget, deadline, totalHours);
+      await addProject(clientId, projectName, requirements, budget);
       setClientId("");
       setProjectName("");
       setRequirements("");
       setBudget("");
-      setDeadline("");
-      setTotalHours("");
       setShowMessage(true);
       setShowModal(false);
     }
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm p-6 mb-3.5">
-      <h2 className="text-xl font-semibold text-gray-800">Enter Project Details</h2>
-      <p className="text-sm text-gray-500 mt-1">Add a new Project to the system</p>
+    <div className="overflow-hidden bg-white">
+      {/* <h2 className="text-xl font-semibold text-gray-800">Enter Project Details</h2>
+      <p className="text-sm text-gray-500 mt-1">Add a new Project to the system</p> */}
 
       <button
         onClick={() => setShowModal(true)}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition text-white"
       >
         Assign Projects
       </button>
@@ -119,33 +113,6 @@ export const Projects = () => {
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
                   placeholder="Enter Budget"
-                  className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="totalHours" className="block font-medium text-gray-700 text-sm">
-                  Total Hours
-                </label>
-                <input
-                  id="totalHours"
-                  type="number"
-                  value={totalHours}
-                  onChange={(e) => setTotalHours(e.target.value)}
-                  placeholder="Enter Total Hours"
-                  className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="deadline" className="block font-medium text-gray-700 text-sm">
-                  Deadline
-                </label>
-                <input
-                  id="deadline"
-                  type="date"
-                  value={deadline}
-                  onChange={(e) => setDeadline(e.target.value)}
                   className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
               </div>
