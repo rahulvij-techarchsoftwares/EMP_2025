@@ -8,23 +8,21 @@ export const Projects = () => {
   const [clientId, setClientId] = useState("");
   const { clients } = useClient();
   const [projectName, setProjectName] = useState("");
-  const [requirements, setRequirements] = useState("");
-  const [budget, setBudget] = useState("");
+
+
   const [showMessage, setShowMessage] = useState(false);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       clientId.trim() &&
-      projectName.trim() &&
-      requirements.trim() &&
-      budget.trim()
+      projectName.trim()
+
     ) {
-      await addProject(clientId, projectName, requirements, budget);
+      await addProject(clientId, projectName );
       setClientId("");
       setProjectName("");
-      setRequirements("");
-      setBudget("");
+
       setShowMessage(true);
       setShowModal(false);
     }
@@ -39,7 +37,7 @@ export const Projects = () => {
         onClick={() => setShowModal(true)}
         className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition text-white"
       >
-        Assign Projects
+        Add Projects
       </button>
 
     {showModal && (
@@ -91,31 +89,9 @@ export const Projects = () => {
                 />
               </div>
 
-              <div>
-                <label htmlFor="requirements" className="block font-medium text-gray-700 text-sm">
-                  Requirements
-                </label>
-                <input
-                  id="requirements"
-                  value={requirements}
-                  onChange={(e) => setRequirements(e.target.value)}
-                  placeholder="Enter Requirements"
-                  className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-              </div>
 
-              <div>
-                <label htmlFor="budget" className="block font-medium text-gray-700 text-sm">
-                  Budget
-                </label>
-                <input
-                  id="budget"
-                  value={budget}
-                  onChange={(e) => setBudget(e.target.value)}
-                  placeholder="Enter Budget"
-                  className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                />
-              </div>
+
+
 
               <button
                 type="submit"

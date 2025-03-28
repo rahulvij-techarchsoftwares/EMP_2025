@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Overview } from "../../../components/RichTextEditor";
 import { useTask } from "../../../context/TaskContext"; 
-import { Edit, Save, Trash2, Loader2, Trash } from "lucide-react";
 
 
 export default function Emptask() {
@@ -75,17 +74,15 @@ export default function Emptask() {
                   </div>
                 </div>
 
-                {/* Task Details (Expands when clicked) */}
+
                 {openTask === task.id && (
                   <div className="mt-5 p-6 bg-blue-50 rounded-2xl shadow-lg border border-blue-300">
 
-                    {/* Editable Deadline Field */}
                     <p className="text-lg text-gray-800 font-semibold">
                       <strong>Deadline:</strong>
                         <span className="ml-2">{task.deadline}</span>
                     </p>
 
-                    {/* Editable Hours Field */}
                     <p className="text-lg text-gray-800 font-semibold">
                       <strong>Hours:</strong>
                         <span className="ml-2">{task.hours}</span>
@@ -95,7 +92,6 @@ export default function Emptask() {
                       <strong>Assigned By:</strong> {task.project_manager?.name}
                     </p>
 
-                    {/* Editable Task Description */}
                     <p className="text-gray-900 mt-5 leading-relaxed border-t pt-4 text-justify text-lg font-medium">
                         {task.description}
                     </p>

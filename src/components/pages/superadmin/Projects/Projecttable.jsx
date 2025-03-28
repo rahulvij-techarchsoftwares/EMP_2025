@@ -10,9 +10,6 @@ export const Projecttable = () => {
   const [editProjectId, setEditProjectId] = useState(null);
   const [editClientId, setEditClientId] = useState('');
   const [editProjectName, setEditProjectName] = useState("");
-  const [editRequirements, setEditRequirements] = useState("");
-  const [editBudget, setEditBudget] = useState("");
-  const [editDeadline, setEditDeadline] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,11 +51,8 @@ export const Projecttable = () => {
 
   const handleEditClick = (project) => {
     setEditProjectId(project.id);
-    setEditClientId(project.client?.id || ""); // Prevents crash if client is missing
+    setEditClientId(project.client?.id || ""); 
     setEditProjectName(project.project_name);
-    setEditRequirements(project.requirements || "");
-    setEditBudget(project.budget || "");
-    setEditDeadline(project.deadline || "");
   };
 
 
@@ -68,9 +62,7 @@ export const Projecttable = () => {
     const updatedData = {
       client_id: editClientId,
       project_name: editProjectName,
-      requirements: editRequirements || null,
-      budget: editBudget ? parseFloat(editBudget) : null,
-      deadline: editDeadline || null,
+
     };
 
     setIsUpdating(true);
@@ -144,9 +136,9 @@ export const Projecttable = () => {
               <tr>
                 <th className="px-4 py-2 font-medium items-center text-sm">Client Name</th>
                 <th className="px-4 py-2 font-medium items-center text-sm">Project Name</th>
-                <th className="px-4 py-2 font-medium items-center text-sm">Requirements</th>
-                <th className="px-4 py-2 font-medium items-center text-sm">Budget</th>
-                <th className="px-4 py-2 font-medium items-center text-sm">Deadline</th>
+
+
+
                 <th className="px-4 py-2 font-medium items-center text-sm">Created Date</th>
                 <th className="px-4 py-2 font-medium items-center text-sm">Actions</th>
               </tr>
@@ -165,7 +157,7 @@ export const Projecttable = () => {
               ) : projects?.length > 0 ? (
                 filteredProjects.map((project) => (
                   <tr key={project.id} className="hover:bg-gray-50 transition-colors duration-150">
-                    <td className="px-6 py-4 items-center text-gray-800 font-medium text-sm">
+                    <td className="px-6 py-4 items-center text-center text-gray-800 font-medium text-sm">
                       {editProjectId === project.id ? (
                         <select
                           value={editClientId}
@@ -180,7 +172,7 @@ export const Projecttable = () => {
                         project.client ? project.client.name : "No Client"
                       )}
                     </td>
-                    <td className="px-6 py-4 items-center text-gray-800 font-medium text-sm">
+                    <td className="px-6 py-4 items-center text-center text-gray-800 font-medium text-sm">
                       {editProjectId === project.id ? (
                         <input
                           type="text"
@@ -193,47 +185,14 @@ export const Projecttable = () => {
                         project.project_name
                       )}
                     </td>
-                    <td className="px-6 py-4 items-center text-gray-600 text-sm">
-                      {editProjectId === project.id ? (
-                        <input
-                          type="text"
-                          value={editRequirements}
-                          onChange={(e) => setEditRequirements(e.target.value)}
-                          className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 w-full"
-                        />
-                      ) : (
-                        project.requirements || "N/A"
-                      )}
-                    </td>
-                    <td className="px-6 py-4 items-center text-gray-600 text-sm">
-                      {editProjectId === project.id ? (
-                        <input
-                          type="number"
-                          value={editBudget}
-                          onChange={(e) => setEditBudget(e.target.value)}
-                          className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 w-full"
-                        />
-                      ) : (
-                        project.budget || "N/A"
-                      )}
-                    </td>
-                    <td className="px-6 py-4 items-center text-gray-600 text-sm">
-                      {editProjectId === project.id ? (
-                        <input
-                          type="date"
-                          value={editDeadline}
-                          onChange={(e) => setEditDeadline(e.target.value)}
-                          className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 w-full"
-                        />
-                      ) : (
-                        project.deadline || "N/A"
-                      )}
-                    </td>
-                    <td className="px-6 py-4 items-center text-gray-600 text-sm">
+
+               
+                  
+                    <td className="px-6 py-4 items-center text-center text-gray-600 text-sm">
                       {project.created_at}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center justify-center space-x-2">
                         {editProjectId === project.id ? (
                           <>
                             <button onClick={handleSaveClick} disabled={isUpdating} className="flex items-center px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-md transition disabled:opacity-50">

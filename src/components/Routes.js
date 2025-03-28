@@ -97,6 +97,11 @@ const AppRoutes = () => {
           />
 
           <Route
+            path="/superadmin/assigned-projects"
+            element={<RoleBasedRoute element={<Assignedelement />} allowedRoles={["superadmin"]} />}
+          />
+
+          <Route
             path="/billingmanager/dashboard"
             element={<RoleBasedRoute element={<BDDashboard />} allowedRoles={["billingmanager"]} />}
           />

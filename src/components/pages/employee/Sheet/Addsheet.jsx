@@ -233,42 +233,46 @@ const Addsheet = () => {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="relative">
-                      <label htmlFor="project_type" className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                        <ClipboardList className="w-4 h-4 mr-2 text-gray-400" />
-                        Project Type
-                      </label>
-                      <select
-                        id="project_type"
-                        name="project_type"
-                        value={formData.project_type}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out appearance-none bg-white"
-                      >
-                        <option value="">--Select--</option>
-                        <option value="Hourly">Hourly</option>
-                        <option value="Fixed">Fixed</option>
-                      </select>
-                    </div>
+  <div className="relative">
+    <label htmlFor="project_type" className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+      <ClipboardList className="w-4 h-4 mr-2 text-gray-400" />
+      Project Type
+    </label>
+    <select
+      id="project_type"
+      name="project_type"
+      value={formData.project_type}
+      onChange={handleChange}
+      className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out appearance-none bg-white"
+    >
+      <option value="">--Select--</option>
+      <option value="Hourly">Hourly</option>
+      <option value="Fixed">Fixed</option>
+    </select>
+  </div>
 
-                    <div className="relative">
-                      <label htmlFor="project_type_status" className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                        <Home className="w-4 h-4 mr-2 text-gray-400" />
-                        Project Type Status
-                      </label>
-                      <select
-                        id="project_type_status"
-                        name="project_type_status"
-                        value={formData.project_type_status}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out appearance-none bg-white"
-                      >
-                        <option value="">--Select--</option>
-                        <option value="Offline">Offline</option>
-                        <option value="Tracker">Tracker</option>
-                      </select>
-                    </div>
-                  </div>
+
+    <div className="relative">
+      <label htmlFor="project_type_status" className="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+        <Home className="w-4 h-4 mr-2 text-gray-400" />
+        Project Type Status
+      </label>
+      <select
+  id="project_type_status"
+  name="project_type_status"
+  value={formData.project_type_status}
+  onChange={handleChange}
+  className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out appearance-none bg-white"
+>
+  <option value="">--Select--</option>
+  <option value="Offline">Offline</option>
+  {formData.project_type === "Hourly" && <option value="Tracker">Tracker</option>}
+</select>
+
+    </div>
+
+</div>
+
 
                   {/* Narration Section */}
                   <div className="relative">

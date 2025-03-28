@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useBDProjectsAssigned } from "../../../context/BDProjectsassigned";
-import { Edit, Save, Trash2, Loader2, Calendar, Users, Building2, Clock } from "lucide-react";
+import { Edit, Save, Trash2, Loader2, Calendar, Users, Building2, Clock, UserPlus } from "lucide-react";
+import { Assigned } from "./Assigned";
 
 function ProjectCard({ project, editProjectId, editProjectName, setEditProjectName, handleEditClick }) {
+  const [showRemoveList, setShowRemoveList] = useState(false);
+  const [selectedManagers, setSelectedManagers] = useState([]);
+
+  const toggleRemoveList = () => {
+    setShowRemoveList(!showRemoveList);
+  };
+
+  const handleCheckboxChange = (managerId) => {
+    setSelectedManagers((prev) =>
+      prev.includes(managerId)
+        ? prev.filter((id) => id !== managerId)
+        : [...prev, managerId]
+    );
+  };
+
+  const handleRemoveManagers = () => {
+    console.log("Removing managers:", selectedManagers);
+    setShowRemoveList(false);
+    setSelectedManagers([]);
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-center">
           <div className="flex-1">
             {editProjectId === project.id ? (
               <input
@@ -24,34 +45,71 @@ function ProjectCard({ project, editProjectId, editProjectName, setEditProjectNa
                 </span>
                 <div className="flex items-center text-gray-700">
                   <Building2 className="h-4 w-4 mr-2 text-blue-600" />
-                  <h3 className="text-sm font-medium">{project.client?.name || "N/A"}</h3>
+                  <h3 className="text-sm font-medium">{project.client_name}</h3>
                 </div>
               </div>
             )}
           </div>
-          {/* <button
-            onClick={() => handleEditClick(project)}
-            className="p-2 hover:bg-white/50 rounded-lg transition-colors duration-200"
-          >
-            <Edit className="h-4 w-4 text-blue-600" />
-          </button> */}
+
+          <button className="flex items-center gap-2 bg-blue-600 text-white px-3 py-1 rounded-lg text-xs font-medium shadow hover:bg-blue-700 transition">
+            <UserPlus className="h-4 w-4" />
+            <Assigned />
+          </button>
         </div>
       </div>
 
       <div className="p-6 space-y-5">
-        <div className="flex items-center text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
-        <Users className="h-4 w-4 text-blue-600 mr-3" />
-  <div>
-    <span className="font-medium text-gray-700 block mb-1">Project Managers</span>
-    {Array.isArray(project.project_managers) && project.project_managers.length > 0 ? (
-      project.project_managers.map((pm) => (
-        <div key={pm.id} className="text-gray-700">{pm.name}</div>
-      ))
-    ) : (
-      "N/A"
-    )}
-  </div>
+        <div className="flex items-center justify-between text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
+          <div className="flex items-center">
+            <Users className="h-4 w-4 text-blue-600 mr-3" />
+            <div>
+              <span className="font-medium text-gray-700 block mb-1">Project Managers</span>
+              {Array.isArray(project.project_managers) && project.project_managers.length > 0 ? (
+                project.project_managers.map((pm) => (
+                  <div key={pm.id} className="text-gray-700">{pm.name}</div>
+                ))
+              ) : (
+                "N/A"
+              )}
+            </div>
+          </div>
+          
+          <button
+            onClick={toggleRemoveList}
+            className="bg-red-500 text-white px-3 py-1 rounded-lg text-xs font-medium shadow hover:bg-red-600 transition flex items-center gap-1"
+          >
+            <Trash2 className="h-4 w-4" />
+            Remove Manager
+          </button>
         </div>
+
+        {showRemoveList && (
+          <div className="mt-3 p-3 bg-gray-100 rounded-lg">
+            {Array.isArray(project.project_managers) && project.project_managers.length > 0 ? (
+              project.project_managers.map((pm) => (
+                <div key={pm.id} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id={`pm-${pm.id}`}
+                    checked={selectedManagers.includes(pm.id)}
+                    onChange={() => handleCheckboxChange(pm.id)}
+                  />
+                  <label htmlFor={`pm-${pm.id}`} className="text-gray-700">
+                    {pm.name}
+                  </label>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-sm">No managers assigned.</p>
+            )}
+            <button
+              onClick={handleRemoveManagers}
+              className="mt-3 bg-blue-500 text-white px-3 py-1 rounded-lg text-xs font-medium shadow hover:bg-blue-600 transition"
+            >
+              Confirm Remove
+            </button>
+          </div>
+        )}
 
         <div className="space-y-3">
           <div className="flex items-center text-sm font-medium text-gray-700">
@@ -88,7 +146,6 @@ function ProjectCard({ project, editProjectId, editProjectName, setEditProjectNa
     </div>
   );
 }
-
 export const Assignedtable = () => {
   const { assignedData, fetchAssigned, isLoading } = useBDProjectsAssigned();
   const [editProjectId, setEditProjectId] = useState(null);
@@ -96,8 +153,10 @@ export const Assignedtable = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  console.log("these are projects data", assignedData);
+
   console.log("this is assigned data", assignedData);
-    useEffect(() => {
+  useEffect(() => {
     fetchAssigned();
   }, []);
 

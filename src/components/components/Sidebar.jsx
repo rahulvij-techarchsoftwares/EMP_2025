@@ -40,6 +40,7 @@ export function Sidebar() {
       { name: "Roles", path: "/superadmin/roles", icon: <UserCog /> },
       { name: "Clients", path: "/superadmin/clients", icon: <Handshake /> },
       { name: "Projects", path: "/superadmin/projects", icon: <FolderOpenDot />, },
+      { name: "Projects Assigned", path: "/superadmin/assigned-projects", icon: <FileSpreadsheet />, },
     ],
     [Roles.BD]: [
       { name: "Dashboard", path: "/billingmanager/dashboard", icon: <House /> },

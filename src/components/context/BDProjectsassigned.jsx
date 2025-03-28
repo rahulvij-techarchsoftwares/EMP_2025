@@ -11,6 +11,7 @@ export const BDProjectsAssignedProvider = ({ children }) => {
   const [projectManagers, setProjectManagers] = useState([]);
   const [assignedData, setAssignedData] = useState([]);
   const [performanceData, setPerformanceData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("userToken");
     const { showAlert } = useAlert(); 
   const navigate = useNavigate();
@@ -176,6 +177,31 @@ const rejectPerformanceSheet = async (id) => {
       showAlert({ variant: "error", title: "Error", message: error });
   }
 };
+
+
+const removeProjectManagers = async (project_id, manager_ids, token) => {
+  try {
+    setLoading(true);
+    const response = await fetch(`${API_URL}/api/remove-project-managers`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Pass the Bearer token
+      },
+      body: JSON.stringify({ project_id, manager_ids }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Failed to remove managers");
+
+    return data;
+  } catch (error) {
+    console.error("Error removing project managers:", error);
+    return { success: false, message: error.message };
+  } finally {
+    setLoading(false);
+  }
+};
   useEffect(() => {
     fetchProjects();
     fetchProjectManagers();
@@ -194,6 +220,7 @@ const rejectPerformanceSheet = async (id) => {
       performanceSheets, 
       approvePerformanceSheet, 
       rejectPerformanceSheet,
+      removeProjectManagers,
       message 
     }}>
       {children}

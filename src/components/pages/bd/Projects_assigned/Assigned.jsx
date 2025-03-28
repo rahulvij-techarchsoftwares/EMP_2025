@@ -62,12 +62,10 @@ export const Assigned = () => {
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm p-6">
-      <h2 className="text-xl font-semibold text-gray-800">Assign Projects</h2>
-      <p className="text-sm text-gray-500 mt-1">Assign a project to managers.</p>
+    <div className="">
       <button
         onClick={() => setShowModal(true)}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        className="text-white px-4 py-2 rounded-md hover:bg-blue-600"
       >
         Assign Projects
       </button>
